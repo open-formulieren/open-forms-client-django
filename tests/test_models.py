@@ -4,8 +4,6 @@ from django.forms import modelform_factory
 from django.forms.widgets import Select
 from django.test import TestCase
 
-import requests_mock
-
 from openformsclient.models import Configuration, OpenFormsField
 
 

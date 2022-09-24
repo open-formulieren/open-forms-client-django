@@ -3,7 +3,7 @@ from typing import Tuple
 from urllib.parse import urljoin
 
 import requests
-from requests.exceptions import HTTPError, JSONDecodeError
+from requests.exceptions import HTTPError
 
 logger = logging.getLogger(__name__)
 

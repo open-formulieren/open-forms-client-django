@@ -11,13 +11,6 @@ register = template.Library()
 
 
 @register.simple_tag
-def openforms(form_id, csp_nonce=None, base_path=None, lang=None, html_id=None):
-    template_name = "openformsclient/templatetags/openforms.html"
-
-    return openforms_form(form_id, csp_nonce, base_path, lang, html_id)
-
-
-@register.simple_tag
 def openforms_form(form_id, csp_nonce=None, base_path=None, lang=None, html_id=None):
     template_name = "openformsclient/templatetags/openforms_form.html"
 
@@ -30,8 +23,6 @@ def openforms_form(form_id, csp_nonce=None, base_path=None, lang=None, html_id=N
         "base_path": base_path,
         "csp_nonce": csp_nonce,
         "lang": lang,
-        "sdk_css_url": config.sdk_css_url,
-        "sdk_js_url": config.sdk_js_url,
     }
 
     if config.use_sentry:
@@ -43,7 +34,7 @@ def openforms_form(form_id, csp_nonce=None, base_path=None, lang=None, html_id=N
             context["sentry_dsn"] = opts.get("dsn")
             context["sentry_env"] = opts.get("environment")
 
-        except ImportError as e:
+        except ImportError:
             logger.exception(
                 "Sentry integration is enabled but Sentry is not installed."
             )
