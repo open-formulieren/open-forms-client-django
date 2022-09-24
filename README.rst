@@ -111,7 +111,7 @@ To use this with your project you need to follow these steps:
 Licence
 =======
 
-Copyright © `Maykin Media`_, 2021
+Copyright © `Maykin Media B.V.`_, 2022
 
 Licensed under the `MIT`_.
 
@@ -132,7 +132,7 @@ Licensed under the `MIT`_.
 .. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
 
-.. |coverage| image:: https://codecov.io/gh/open-formulieren/open-forms-client-django/branch/master/graph/badge.svg
+.. |coverage| image:: https://codecov.io/gh/open-formulieren/open-forms-client-django/branch/main/graph/badge.svg
     :target: https://codecov.io/gh/open-formulieren/open-forms-client-django
     :alt: Coverage status
 
@@ -143,14 +143,14 @@ Licensed under the `MIT`_.
 .. |pypi-version| image:: https://img.shields.io/pypi/v/open-forms-client.svg
     :target: https://pypi.org/project/open-forms-client/
 
-.. |screenshot-1| image:: https://github.com/open-formulieren/open-forms-client-django/raw/master/docs/_assets/screenshot_admin_config.png
+.. |screenshot-1| image:: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_admin_config.png
     :alt: Ordered dashboard with dropdown menu.
-    :target: https://github.com/open-formulieren/open-forms-client-django/raw/master/docs/_assets/screenshot_admin_config.png
+    :target: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_admin_config.png
 
-.. |screenshot-2| image:: https://github.com/open-formulieren/open-forms-client-django/raw/master/docs/_assets/screenshot_admin_model_field.png
+.. |screenshot-2| image:: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_admin_model_field.png
     :alt: Ordered dashboard with dropdown menu.
-    :target: https://github.com/open-formulieren/open-forms-client-django/raw/master/docs/_assets/screenshot_admin_model_field.png
+    :target: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_admin_model_field.png
 
-.. |screenshot-3| image:: https://github.com/open-formulieren/open-forms-client-django/raw/master/docs/_assets/screenshot_form_rendering.png
+.. |screenshot-3| image:: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_form_rendering.png
     :alt: Ordered dashboard with dropdown menu.
-    :target: https://github.com/open-formulieren/open-forms-client-django/raw/master/docs/_assets/screenshot_form_rendering.png
+    :target: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_form_rendering.png
