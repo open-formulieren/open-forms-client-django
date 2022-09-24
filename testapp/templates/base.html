@@ -1,0 +1,28 @@
+{% load openforms %}
+<!-- Optional to render Open Forms in the proper language -->
+<html lang="nl">
+<head>
+    <!-- Required for icons used by Open Forms -->
+    <meta charset="utf-8">
+
+    {% openforms_sdk_media %}
+
+    <style type="text/css">
+        /* Our website CSS */
+        body {
+            background-color: #ccccff;
+        }
+        /* You can also fiddle with the Open Forms CSS */
+        .openforms-progress-indicator {
+            background-color: #ccccff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Testapp</h1>
+
+    {% block content %}{% endblock %}
+
+    <p>Some footer</p>
+</body>
+</html>

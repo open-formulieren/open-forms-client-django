@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>Pages</h2>
+
+    <ul>
+        {% for page in object_list %}
+            <li>
+                <a href="{% url 'page' page.slug %}">{{ page.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

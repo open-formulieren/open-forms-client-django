@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load openforms %}
+
+{% block content %}
+
+    <h2>{{ page.title }}</h2>
+
+    {% if page.form %}
+        {% openforms_form page.form %}
+    {% else %}
+        <p>This page has no form</p>
+    {% endif %}
+
+{% endblock %}
