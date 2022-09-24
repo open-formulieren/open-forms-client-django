@@ -1,0 +1,15 @@
+<div
+    id="{{ html_id }}"
+    data-base-url="{{ base_url }}"
+    data-form-id="{{ form_id }}"
+    {% if base_path %}data-base-path="{{ base_path }}"{% endif %}
+    {% if csp_nonce %}data-csp-nonce="{{ csp_nonce }}"{% endif %}
+    {% if lang %}data-lang="{{ lang }}"{% endif %}
+    {% if sentry_dsn %}data-sentry-dsn="{{ sentry_dsn }}"{% endif %}
+    {% if sentry_env %}data-sentry-env="{{ sentry_env }}"{% endif %}
+></div>
+<script {% if csp_nonce %} nonce="{{ csp_nonce }}"{% endif %}>
+    var targetNode = document.getElementById('{{ html_id }}');
+    var form = new OpenForms.OpenForm(targetNode, targetNode.dataset);
+    form.init();
+</script>
