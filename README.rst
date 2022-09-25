@@ -65,14 +65,14 @@ To use this with your project you need to follow these steps:
 
       INSTALLED_APPS = (
           # ...,
-          "open_forms_client",
+          "openformsclient",
       )
-
-   Note that there are no dashes in the module name, only underscores.
 
 #. Add an ``OpenFormsField`` to your relevant models (like a ``Page`` model):
 
    .. code-block:: python
+
+      from openformsclient.models import OpenFormsField
 
       class Page(models.Model):
           # ...
@@ -82,7 +82,7 @@ To use this with your project you need to follow these steps:
    ``{% openforms_form page.form %}`` to your templates, to render an Open 
    Forms form:
 
-   .. code-block:: html
+   .. code-block:: jinja
  
       {% load openforms %}
       <!-- Optional to render Open Forms in the proper language -->
@@ -117,12 +117,13 @@ Templatetags
 There are 4 templatetags available with several parameters. All parameters
 translate to `Open Forms SDK`_ parameters.
 
-.. code-block:: python
+.. code-block:: jinja
 
-   openforms_form(form_id, csp_nonce=None, base_path=None, lang=None, html_id=None)
-   openforms_sdk_media()
-   openforms_sdk_js()
-   openforms_sdk_css()
+   {% load openforms %}
+   {% openforms_form form_id csp_nonce base_path, lang, html_id %}
+   {% openforms_sdk_media %}
+   {% openforms_sdk_js %}
+   {% openforms_sdk_css %}
 
 
 Gotcha's
@@ -242,4 +243,4 @@ Licensed under the `MIT`_.
 .. |screenshot-3| image:: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_form_rendering.png
     :alt: Ordered dashboard with dropdown menu.
     :target: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_form_rendering.png
-    :width: 50%
+    :width: 49%
