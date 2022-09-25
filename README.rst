@@ -136,7 +136,7 @@ Make sure the domain where you host your webapplication is in the Open Forms
 webapplication but in the setting in the Open Forms installation.
 
 
-CPS headers
+CSP headers
 ~~~~~~~~~~~
 
 When your webapplication uses `CSP headers`_ you need to pass the ``csp_nonce``
@@ -146,7 +146,7 @@ do this:
 .. code-block:: html
  
    {% load openforms %}
-   {% openforms_form page.form csp_nonce=csp_nonce=request.csp_nonce %}
+   {% openforms_form page.form csp_nonce=request.csp_nonce %}
 
 Additionally, you need to allow your webapplication to load styles and scripts 
 from the Open Forms SDK and connect to the Open Forms API. When using 
