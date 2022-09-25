@@ -223,12 +223,12 @@ Licensed under the `MIT`_.
     :target: https://codecov.io/gh/open-formulieren/open-forms-client-django
     :alt: Coverage status
 
-.. |python-versions| image:: https://img.shields.io/pypi/pyversions/open-forms-client.svg
+.. |python-versions| image:: https://img.shields.io/pypi/pyversions/django-open-forms-client.svg
 
-.. |django-versions| image:: https://img.shields.io/pypi/djversions/open-forms-client.svg
+.. |django-versions| image:: https://img.shields.io/pypi/djversions/django-open-forms-client.svg
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/open-forms-client.svg
-    :target: https://pypi.org/project/open-forms-client/
+.. |pypi-version| image:: https://img.shields.io/pypi/v/django-open-forms-client.svg
+    :target: https://pypi.org/project/django-open-forms-client/
 
 .. |screenshot-1| image:: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_admin_config.png
     :alt: Ordered dashboard with dropdown menu.
