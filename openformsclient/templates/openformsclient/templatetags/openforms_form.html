@@ -8,7 +8,7 @@
     {% if sentry_dsn %}data-sentry-dsn="{{ sentry_dsn }}"{% endif %}
     {% if sentry_env %}data-sentry-env="{{ sentry_env }}"{% endif %}
 ></div>
-<script {% if csp_nonce %} nonce="{{ csp_nonce }}"{% endif %}>
+<script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %}>
     var targetNode = document.getElementById('{{ html_id }}');
     var form = new OpenForms.OpenForm(targetNode, targetNode.dataset);
     form.init();

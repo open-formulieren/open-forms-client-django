@@ -43,13 +43,12 @@ def openforms_form(form_id, csp_nonce=None, base_path=None, lang=None, html_id=N
 
 
 @register.simple_tag
-def openforms_sdk_media(csp_nonce=None):
+def openforms_sdk_media():
     template_name = "openformsclient/templatetags/openforms_sdk_media.html"
 
     config = Configuration.get_solo()
 
     context = {
-        "csp_nonce": csp_nonce,
         "sdk_js_url": config.sdk_js_url,
         "sdk_css_url": config.sdk_css_url,
     }
@@ -58,13 +57,12 @@ def openforms_sdk_media(csp_nonce=None):
 
 
 @register.simple_tag
-def openforms_sdk_js(csp_nonce=None):
+def openforms_sdk_js():
     template_name = "openformsclient/templatetags/openforms_sdk_js.html"
 
     config = Configuration.get_solo()
 
     context = {
-        "csp_nonce": csp_nonce,
         "sdk_js_url": config.sdk_js_url,
     }
 
