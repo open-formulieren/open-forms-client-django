@@ -7,7 +7,7 @@
 
     {% openforms_sdk_media %}
 
-    <style type="text/css">
+    <style type="text/css" nonce="{{ request.csp_nonce }}">
         /* Our website CSS */
         body {
             background-color: #ccccff;

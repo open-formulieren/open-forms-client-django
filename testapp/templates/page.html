@@ -6,7 +6,7 @@
     <h2>{{ page.title }}</h2>
 
     {% if page.form %}
-        {% openforms_form page.form %}
+        {% openforms_form page.form csp_nonce=request.csp_nonce %}
     {% else %}
         <p>This page has no form</p>
     {% endif %}

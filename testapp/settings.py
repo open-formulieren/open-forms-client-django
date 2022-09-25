@@ -57,3 +57,39 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+try:
+    import csp  # noqa
+
+    print("Using CSP headers and allowing:")
+    MIDDLEWARE += [
+        "csp.middleware.CSPMiddleware",
+    ]
+
+    # Default source as self
+    CSP_DEFAULT_SRC = ("'self'",)
+
+    # The Open Forms SDK files might differ from the API domain.
+    OPEN_FORMS_API_DOMAIN = "forms.example.com"
+    OPEN_FORMS_SDK_DOMAIN = OPEN_FORMS_API_DOMAIN
+
+    # Allow your webapp to load styles from Open Forms SDK.
+    CSP_STYLE_SRC = ("'self'", OPEN_FORMS_SDK_DOMAIN)
+
+    # Allow your webapp to load script from Open Forms SDK.
+    CSP_SCRIPT_SRC = ("'self'", OPEN_FORMS_SDK_DOMAIN)
+
+    # Allow your webapp to load images from Open Forms SDK.
+    CSP_IMG_SRC = ("'self'", OPEN_FORMS_SDK_DOMAIN)
+
+    # Allow your webapp to load fonts from Open Forms SDK.
+    CSP_FONT_SRC = ("'self'", OPEN_FORMS_SDK_DOMAIN)
+
+    # Allow your webapp to connect to the Open Forms API.
+    CSP_CONNECT_SRC = ("'self'", OPEN_FORMS_API_DOMAIN)
+
+    # The 'style-src' is only added here to allow our own inline styles.
+    CSP_INCLUDE_NONCE_IN = ("script-src", "style-src")
+
+except ImportError:
+    print("Not using CSP headers: Django-CSP is not installed.")
