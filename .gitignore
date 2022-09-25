@@ -104,3 +104,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Editor
+.vscode/
+
+# Development
+manage.py
