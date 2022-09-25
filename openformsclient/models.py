@@ -1,11 +1,11 @@
 import logging
-from functools import cached_property
 
 from django.core.cache import cache
 from django.db import models
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.forms.fields import TypedChoiceField
 from django.forms.widgets import Select
+from django.utils.functional import cached_property
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
