@@ -182,15 +182,15 @@ on. Refreshing the page will result in a HTTP 404 because this URL does not
 actually exist. You need to catch these URL-patterns and redirect the user 
 back to the form. You can so like this:
 
-   .. code-block:: python
+.. code-block:: python
    
-      # urls.py
+   # urls.py
    
-      # The view thats starts the form
-      path("page/<slug:slug>", PageView.as_view(), name="page"),
-      # Whenever you refresh the page that has the form, the URL might be changed
-      # and needs to redirect the user to the start of the form.
-      re_path("^page/(?P<slug>\w+)/", FormRedirectView.as_view()),
+   # The view thats starts the form
+   path("page/<slug:slug>", PageView.as_view(), name="page"),
+   # Whenever you refresh the page that has the form, the URL might be changed
+   # and needs to redirect the user to the start of the form.
+   re_path("^page/(?P<slug>\w+)/", FormRedirectView.as_view()),
 
 
 Licence
