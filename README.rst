@@ -237,7 +237,9 @@ Licensed under the `MIT`_.
 .. |screenshot-2| image:: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_admin_model_field.png
     :alt: Ordered dashboard with dropdown menu.
     :target: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_admin_model_field.png
+    :width: 49%
 
 .. |screenshot-3| image:: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_form_rendering.png
     :alt: Ordered dashboard with dropdown menu.
     :target: https://github.com/open-formulieren/open-forms-client-django/raw/main/docs/_assets/screenshot_form_rendering.png
+    :width: 50%
