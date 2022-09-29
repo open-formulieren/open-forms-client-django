@@ -4,11 +4,12 @@ from django.forms import modelform_factory
 from django.forms.widgets import Select
 from django.test import TestCase
 
-from openformsclient.models import Configuration, OpenFormsField
+from openformsclient.models import Configuration, OpenFormsSlugField, OpenFormsUUIDField
 
 
 class Dummy(models.Model):
-    form = OpenFormsField()
+    form_uuid = OpenFormsUUIDField()
+    form_slug = OpenFormsSlugField()
 
     class Meta:
         app_label = "tests"
@@ -40,17 +41,32 @@ class ConfigurationTests(TestCase):
 
 
 class OpenFormsFieldTests(TestCase):
-    def test_form_field_widget(self):
-        DummyForm = modelform_factory(Dummy, fields=["form"])
+    def test_slug_form_field_widget(self):
+        DummyForm = modelform_factory(Dummy, fields=["form_slug"])
         form = DummyForm()
-        form_field = form.fields["form"]
+        form_field = form.fields["form_slug"]
 
         self.assertIsInstance(form_field.widget, Select)
 
-    def test_form_field_admin_widget(self):
+    def test_slug_form_field_admin_widget(self):
         model_admin = DummyAdmin(Dummy, admin.site)
         form_field = model_admin.formfield_for_dbfield(
-            Dummy._meta.get_field("form"), request=None
+            Dummy._meta.get_field("form_slug"), request=None
+        )
+
+        self.assertIsInstance(form_field.widget, Select)
+
+    def test_uuid_form_field_widget(self):
+        DummyForm = modelform_factory(Dummy, fields=["form_uuid"])
+        form = DummyForm()
+        form_field = form.fields["form_uuid"]
+
+        self.assertIsInstance(form_field.widget, Select)
+
+    def test_uuid_form_field_admin_widget(self):
+        model_admin = DummyAdmin(Dummy, admin.site)
+        form_field = model_admin.formfield_for_dbfield(
+            Dummy._meta.get_field("form_uuid"), request=None
         )
 
         self.assertIsInstance(form_field.widget, Select)

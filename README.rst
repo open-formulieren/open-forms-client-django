@@ -76,7 +76,11 @@ To use this with your project you need to follow these steps:
 
       class Page(models.Model):
           # ...
-          form = OpenFormsField(blank=True)
+          form = OpenFormsSlugField(blank=True)
+
+   There is also a ``OpenFormsUUIDField`` that stores the UUID of the form 
+   instead of the "slug". This is more precise but if someone replaces a form 
+   in Open Forms, the UUID will change but the slug might remain the same.
 
 #. Add the templatetags ``{% openforms_sdk_media %}`` and 
    ``{% openforms_form page.form %}`` to your templates, to render an Open 
@@ -155,7 +159,9 @@ from the Open Forms SDK and connect to the Open Forms API. When using
 
 .. code-block:: python
 
-    # The Open Forms SDK files might differ from the API domain.
+    # The Open Forms SDK files might differ from the API domain. Note that this
+    # the same domain as configured in the Open Forms configuration model. You
+    # might do something smart to use that value here.
     OPEN_FORMS_API_DOMAIN = "forms.example.com"
     OPEN_FORMS_SDK_DOMAIN = OPEN_FORMS_API_DOMAIN
 
@@ -191,7 +197,7 @@ back to the form. You can so like this:
    path("page/<slug:slug>", PageView.as_view(), name="page"),
    # Whenever you refresh the page that has the form, the URL might be changed
    # and needs to redirect the user to the start of the form.
-   re_path("^page/(?P<slug>\w+)/", FormRedirectView.as_view()),
+   path("page/<slug:slug>/<path:rest>", PageView.as_view()),
 
 
 Licence

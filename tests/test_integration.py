@@ -1,17 +1,12 @@
-from django.db import models
+from uuid import UUID
+
 from django.forms import modelform_factory
 from django.test import TestCase
 
 import requests_mock
 
-from openformsclient.models import Configuration, OpenFormsField
-
-
-class Page(models.Model):
-    form = OpenFormsField()
-
-    class Meta:
-        app_label = "tests"
+from openformsclient.models import Configuration
+from testapp.models import Page
 
 
 @requests_mock.Mocker()
@@ -26,37 +21,111 @@ class IntegrationTests(TestCase):
         m.get(
             f"{self.config.api_root}forms",
             json=[
-                {"uuid": "1b0d0675-2caf-48e8-beda-c32c6732b63c", "name": "Test 2"},
-                {"uuid": "f4423c99-6341-442e-aedc-b47779579f4d", "name": "Test 1"},
+                {
+                    "uuid": "1b0d0675-2caf-48e8-beda-c32c6732b63c",
+                    "slug": "test-2",
+                    "name": "Test 2",
+                },
+                {
+                    "uuid": "f4423c99-6341-442e-aedc-b47779579f4d",
+                    "slug": "test-1",
+                    "name": "Test 1",
+                },
             ],
         )
 
-    def test_values_in_form_field(self, m):
+    def test_values_in_slug_form_field(self, m):
         self._prepare_mock(m)
 
-        PageForm = modelform_factory(Page, fields=["form"])
+        PageForm = modelform_factory(Page, fields=["form_slug"])
         page_form = PageForm()
 
         self.assertListEqual(
-            page_form.fields["form"].choices,
+            page_form.fields["form_slug"].choices,
             [
+                ("", "---------"),
+                ("test-1", "Test 1"),
+                ("test-2", "Test 2"),
+            ],
+        )
+
+    def test_values_in_uuid_form_field(self, m):
+        self._prepare_mock(m)
+
+        PageForm = modelform_factory(Page, fields=["form_uuid"])
+        page_form = PageForm()
+
+        self.assertListEqual(
+            page_form.fields["form_uuid"].choices,
+            [
+                ("", "---------"),
                 ("f4423c99-6341-442e-aedc-b47779579f4d", "Test 1"),
                 ("1b0d0675-2caf-48e8-beda-c32c6732b63c", "Test 2"),
             ],
         )
 
-    def test_valid_value_in_form_field(self, m):
+    def test_uuid_form_field_valid_value(self, m):
         self._prepare_mock(m)
 
-        PageForm = modelform_factory(Page, fields=["form"])
-        page_form = PageForm(data={"form": "f4423c99-6341-442e-aedc-b47779579f4d"})
+        PageForm = modelform_factory(Page, fields=["form_uuid"])
+        page_form = PageForm(data={"form_uuid": "f4423c99-6341-442e-aedc-b47779579f4d"})
 
         self.assertTrue(page_form.is_valid())
+        page_form.save()
 
-    def test_invalid_value_in_form_field(self, m):
+        self.assertEqual(Page.objects.count(), 1)
+        self.assertEqual(
+            Page.objects.get().form_uuid, UUID("f4423c99-6341-442e-aedc-b47779579f4d")
+        )
+
+    def test_uuid_form_field_invalid_value(self, m):
         self._prepare_mock(m)
 
-        PageForm = modelform_factory(Page, fields=["form"])
-        page_form = PageForm(data={"form": "3285e94f-adae-4a5c-a467-30690a279364"})
+        PageForm = modelform_factory(Page, fields=["form_uuid"])
+        page_form = PageForm(data={"form_uuid": "3285e94f-adae-4a5c-a467-30690a279364"})
 
         self.assertFalse(page_form.is_valid())
+
+    def test_uuid_form_field_blank_null(self, m):
+        self._prepare_mock(m)
+
+        PageForm = modelform_factory(Page, fields=["form_uuid"])
+        page_form = PageForm(data={"form_uuid": ""})
+
+        self.assertTrue(page_form.is_valid())
+        page_form.save()
+
+        self.assertEqual(Page.objects.count(), 1)
+        self.assertIsNone(Page.objects.get().form_uuid)
+
+    def test_slug_form_field_valid_value(self, m):
+        self._prepare_mock(m)
+
+        PageForm = modelform_factory(Page, fields=["form_slug"])
+        page_form = PageForm(data={"form_slug": "test-1"})
+
+        self.assertTrue(page_form.is_valid())
+        page_form.save()
+
+        self.assertEqual(Page.objects.count(), 1)
+        self.assertEqual(Page.objects.get().form_slug, "test-1")
+
+    def test_slug_form_field_invalid_value(self, m):
+        self._prepare_mock(m)
+
+        PageForm = modelform_factory(Page, fields=["form_slug"])
+        page_form = PageForm(data={"form_slug": "test-3"})
+
+        self.assertFalse(page_form.is_valid())
+
+    def test_slug_form_field_blank(self, m):
+        self._prepare_mock(m)
+
+        PageForm = modelform_factory(Page, fields=["form_slug"])
+        page_form = PageForm(data={"form_slug": ""})
+
+        self.assertTrue(page_form.is_valid())
+        page_form.save()
+
+        self.assertEqual(Page.objects.count(), 1)
+        self.assertEqual(Page.objects.get().form_slug, "")

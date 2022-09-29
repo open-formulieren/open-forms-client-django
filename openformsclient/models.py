@@ -76,13 +76,23 @@ class Configuration(SingletonModel):
         return Client(self.api_root, self.api_token)
 
 
-class OpenFormsField(models.UUIDField):
+class OpenFormsBaseField:
     """
     Basic field for use in Django models to render a Select widget filled with
-    the available forms in Open Forms.
+    the available forms (uuid, name) or (slug, name) in Open Forms.
+
+    This form records the form's UUID or slug, depending on what concrete model
+    class is used.
     """
 
-    CACHE_KEY = "openformsclient.models.OpenFormsField.get_choices"
+    description = _("Open Forms form")
+    use_uuids = None
+
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        # We do not exclude max_length if it matches default as we want to change
+        # the default in future.
+        return name, path, args, kwargs
 
     def formfield(self, **kwargs):
         defaults = {
@@ -104,15 +114,17 @@ class OpenFormsField(models.UUIDField):
         limit_choices_to=None,
         ordering=(),
     ):
-        choices = cache.get(self.CACHE_KEY)
+        cache_key = f"openformsclient.models.OpenFormsFieldMixin.get_choices__use_uuids_{self.use_uuids}"
+
+        choices = cache.get(cache_key)
         if choices is None:
             try:
-                choices = get_form_choices()
+                choices = get_form_choices(use_uuids=self.use_uuids)
             except Exception as e:
                 logger.exception(e)
                 choices = []
             else:
-                cache.set(self.CACHE_KEY, choices)
+                cache.set(cache_key, choices, timeout=60)
 
         if choices:
             if include_blank:
@@ -121,3 +133,37 @@ class OpenFormsField(models.UUIDField):
                     choices = blank_choice + choices
 
         return choices
+
+
+class OpenFormsUUIDField(OpenFormsBaseField, models.UUIDField):
+    """
+    Basic field for use in Django models to render a Select widget filled with
+    the available forms (uuid, name) in Open Forms.
+
+    This field records the form's UUID. This makes the choice really specific.
+    Note that to allow empty records, you will need to set ``null=True`` and
+    ``blank=True``.
+    """
+
+    use_uuids = True
+
+    def get_db_prep_value(self, value, connection, prepared=False):
+        # A Select widget always returns a string. If an empty string is
+        # returned, we need to force it to be None since an empty string is not
+        # valid UUID nor is it empty.
+        if not value:
+            return None
+        return super().get_db_prep_value(value, connection, prepared)
+
+
+class OpenFormsSlugField(OpenFormsBaseField, models.SlugField):
+    """
+    Basic field for use in Django models to render a Select widget filled with
+    the available forms (slug, name) in Open Forms.
+
+    This field records the form's slug. This allows an Open Forms user to
+    gracefully change the form without the need to change the reference
+    everywhere.
+    """
+
+    use_uuids = False
