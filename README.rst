@@ -124,7 +124,7 @@ translate to `Open Forms SDK`_ parameters.
 .. code-block:: jinja
 
    {% load openforms %}
-   {% openforms_form form_id csp_nonce base_path, lang, html_id %}
+   {% openforms_form form_id csp_nonce base_path lang html_id %}
    {% openforms_sdk_media %}
    {% openforms_sdk_js %}
    {% openforms_sdk_css %}
