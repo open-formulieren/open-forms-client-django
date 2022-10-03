@@ -167,3 +167,14 @@ class OpenFormsSlugField(OpenFormsBaseField, models.SlugField):
     """
 
     use_uuids = False
+
+    def __init__(
+        self, *args, max_length=100, db_index=False, allow_unicode=False, **kwargs
+    ):
+        super().__init__(
+            *args,
+            max_length=max_length,
+            db_index=db_index,
+            allow_unicode=allow_unicode,
+            **kwargs,
+        )
