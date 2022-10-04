@@ -200,6 +200,18 @@ back to the form. You can so like this:
    path("page/<slug:slug>/<path:rest>", PageView.as_view()),
 
 
+Form won't start
+~~~~~~~~~~~~~~~~
+
+If you can see the form startpage but when you click "start" it doesn't do 
+anything (or you see a CSRF error in your browser log), you are most likely 
+logged in to Open Forms as admin user. Log out of Open Forms or use incognito
+mode to start the form.
+
+This is a 
+`known issue <https://github.com/open-formulieren/open-forms/issues/2104>`_.
+
+
 Licence
 =======
 
