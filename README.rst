@@ -136,10 +136,12 @@ Gotcha's
 Open Forms configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Make sure the domain where you host your webapplication is in the Open Forms
-``ALLOWED_HOSTS`` setting. Note that this is **not** the setting in your own
-webapplication but in the setting in the Open Forms installation.
+Note that these are **not** settings in your own webapplication but they should
+be set correctly in the Open Forms installation.
 
+* ``ALLOWED_HOSTS`` contains your domain name.
+* ``CSRF_TRUSTED_ORIGINS`` contains your domain name.
+* ``CSRF_COOKIE_SAMESITE`` should be ``"none"``.
 
 CSP headers
 ~~~~~~~~~~~
@@ -198,6 +200,21 @@ back to the form. You can so like this:
    # Whenever you refresh the page that has the form, the URL might be changed
    # and needs to redirect the user to the start of the form.
    path("page/<slug:slug>/<path:rest>", PageView.as_view()),
+
+
+Form shows a CSRF error
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This can have many reasons because by default, you typically don't want 
+cross-site requests. The whole point of this client however, is to allow 
+cross-site requests from your website to Open Forms.
+
+Make sure your (not Open Forms) ``SECURE_REFERER_POLICY`` Django setting is set
+to ``origin-when-cross-origin`` or less strict. In Django 3.1 this was made 
+more strict by default.
+
+If this is set correctly and you still get this error, see above settings if 
+your Open Forms installation was correctly configured.
 
 
 Form won't start
