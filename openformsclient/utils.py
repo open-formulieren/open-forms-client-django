@@ -10,6 +10,9 @@ def get_form_choices(client=None, use_uuids=False):
         config = Configuration.get_solo()
         client = config.client
 
+    if not client.has_config():
+        return []
+
     response = client.get_forms()
 
     key = "uuid" if use_uuids else "slug"

@@ -2,6 +2,7 @@ from django.test import TestCase
 
 import requests_mock
 
+from openformsclient.client import Client
 from openformsclient.models import Configuration
 from openformsclient.utils import get_form_choices
 
@@ -13,6 +14,11 @@ class UtilsTests(TestCase):
             api_root="https://example.com/api/v1/",
             api_token="token",
         )
+
+    def test_get_form_choices_without_config(self, m):
+        client = Client("", "")
+        result = get_form_choices(client)
+        self.assertEqual(result, [])
 
     def test_get_form_choices_without_client(self, m):
         m.get(

@@ -27,6 +27,9 @@ class Client:
 
         return response
 
+    def has_config(self) -> bool:
+        return bool(self.api_root and self.api_token)
+
     def is_healthy(self) -> Tuple[bool, str]:
         """ """
         try:
