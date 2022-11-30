@@ -3,7 +3,7 @@
 Open Forms Client (for Django)
 ==============================
 
-:Version: 0.2.2
+:Version: 0.2.3
 :Source: https://github.com/open-formulieren/open-forms-client-django
 :Keywords: Open Forms, Client, Django
 :PythonVersion: 3.7

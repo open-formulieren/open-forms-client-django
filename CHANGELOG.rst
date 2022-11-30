@@ -2,6 +2,14 @@
 Changelog
 =========
 
+0.2.3
+=====
+
+*November 22, 2022*
+
+* Fixed startup errors due to no configuration present.
+* Added more gotcha's to the README.
+
 0.2.2
 =====
 
