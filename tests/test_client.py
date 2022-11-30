@@ -13,6 +13,10 @@ class ClientTests(TestCase):
         self.api_token = "token"
         self.client = Client(self.api_root, self.api_token)
 
+    def test_has_config(self, m):
+        self.assertTrue(self.client.has_config())
+        self.assertFalse(Client("", "").has_config())
+
     def test_is_healthy(self, m):
         m.head(
             f"{self.api_root}forms",
