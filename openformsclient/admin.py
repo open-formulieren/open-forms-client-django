@@ -16,6 +16,7 @@ class ConfigurationAdmin(SingletonModelAdmin):
                 "fields": (
                     "api_root",
                     "api_token",
+                    "client_timeout",
                     "status",
                 )
             },

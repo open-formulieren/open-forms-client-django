@@ -9,15 +9,15 @@ logger = logging.getLogger(__name__)
 
 
 class Client:
-    def __init__(self, api_root, api_token):
+    def __init__(self, api_root, api_token, client_timeout):
         self.api_root = api_root
         self.api_token = api_token
+        self.timeout = client_timeout
 
     def _request(self, method, relative_url, **extra_kwargs):
-
         kwargs = {
             "headers": {"Authorization": f"Token {self.api_token}"},
-            "timeout": 5,
+            "timeout": self.timeout,
         }
         kwargs.update(extra_kwargs)
 

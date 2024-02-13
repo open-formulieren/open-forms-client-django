@@ -36,6 +36,11 @@ class Configuration(SingletonModel):
             "The Open Forms API token value. Example: 7ab84e80b3d68d52a5f9e1712e3d0eda27d21e58"
         ),
     )
+    client_timeout = models.PositiveIntegerField(
+        _("Client request timeout"),
+        default=5,
+        help_text=_("The timeout that is used for requests (in seconds)"),
+    )
 
     sdk_css_url = models.URLField(
         _("SDK CSS URL"),
@@ -73,7 +78,7 @@ class Configuration(SingletonModel):
 
     @cached_property
     def client(self):
-        return Client(self.api_root, self.api_token)
+        return Client(self.api_root, self.api_token, self.client_timeout)
 
 
 class OpenFormsBaseField:
