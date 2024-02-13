@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.test import TestCase
 
 import requests_mock
@@ -11,11 +13,12 @@ class ClientTests(TestCase):
     def setUp(self):
         self.api_root = "https://example.com/api/v1/"
         self.api_token = "token"
-        self.client = Client(self.api_root, self.api_token)
+        self.client_timeout = 2
+        self.client = Client(self.api_root, self.api_token, self.client_timeout)
 
     def test_has_config(self, m):
         self.assertTrue(self.client.has_config())
-        self.assertFalse(Client("", "").has_config())
+        self.assertFalse(Client("", "", "").has_config())
 
     def test_is_healthy(self, m):
         m.head(
@@ -76,3 +79,13 @@ class ClientTests(TestCase):
 
         with self.assertRaises(HTTPError):
             self.client.get_form("myform")
+
+    def test_request_uses_configured_timeout(self, m):
+        with patch("openformsclient.client.requests.request") as mock_request:
+            self.client.get_form("myform")
+            mock_request.assert_called_with(
+                "get",
+                "https://example.com/api/v1/forms/myform",
+                headers={"Authorization": "Token token"},
+                timeout=2,
+            )

@@ -16,7 +16,7 @@ class UtilsTests(TestCase):
         )
 
     def test_get_form_choices_without_config(self, m):
-        client = Client("", "")
+        client = Client("", "", "")
         result = get_form_choices(client)
         self.assertEqual(result, [])
 
