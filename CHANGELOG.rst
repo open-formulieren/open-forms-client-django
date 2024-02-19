@@ -2,6 +2,13 @@
 Changelog
 =========
 
+0.3.0
+=====
+
+*February 13, 2024*
+
+* Add configurable client timeout to config
+
 0.2.3
 =====
 
@@ -32,7 +39,7 @@ Changelog
 
 *September 29, 2022*
 
-* Added ``OpenFormsSlugField`` and renamed ``OpenFormsField`` to 
+* Added ``OpenFormsSlugField`` and renamed ``OpenFormsField`` to
   ``OpenFormsUUIDField``.
 * Added tests for templatetags.
 * Fixed various documentation issues.
