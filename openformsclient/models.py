@@ -107,7 +107,8 @@ class OpenFormsBaseField:
             "widget": Select,
         }
 
-        defaults["choices"] = self.get_choices(include_blank=self.blank)
+        if self.choices is None:
+            defaults["choices"] = self.get_choices(include_blank=self.blank)
         defaults["coerce"] = self.to_python
 
         return TypedChoiceField(**defaults)
