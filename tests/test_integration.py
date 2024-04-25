@@ -41,7 +41,7 @@ class IntegrationTests(TestCase):
         page_form = PageForm()
 
         self.assertListEqual(
-            page_form.fields["form_slug"].choices,
+            list(page_form.fields["form_slug"].choices),
             [
                 ("", "---------"),
                 ("test-1", "Test 1"),
@@ -56,7 +56,7 @@ class IntegrationTests(TestCase):
         page_form = PageForm()
 
         self.assertListEqual(
-            page_form.fields["form_uuid"].choices,
+            list(page_form.fields["form_uuid"].choices),
             [
                 ("", "---------"),
                 ("f4423c99-6341-442e-aedc-b47779579f4d", "Test 1"),
