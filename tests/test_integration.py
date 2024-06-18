@@ -1,9 +1,11 @@
+import datetime
 from uuid import UUID
 
 from django.forms import modelform_factory
 from django.test import TestCase
 
 import requests_mock
+import time_machine
 
 from openformsclient.models import Configuration
 from testapp.models import Page
@@ -129,3 +131,21 @@ class IntegrationTests(TestCase):
 
         self.assertEqual(Page.objects.count(), 1)
         self.assertEqual(Page.objects.get().form_slug, "")
+
+    def test_form_retrieval_cache(self, m):
+        self._prepare_mock(m)
+
+        PageForm = modelform_factory(Page, fields=["form_slug"])
+        page_form = PageForm()
+
+        with time_machine.travel(0) as traveller:
+            list(page_form.fields["form_slug"].choices)
+            list(page_form.fields["form_slug"].choices)
+
+            self.assertEqual(m.call_count, 1)
+
+            traveller.shift(datetime.timedelta(seconds=60))
+
+            list(page_form.fields["form_slug"].choices)
+
+            self.assertEqual(m.call_count, 2)
