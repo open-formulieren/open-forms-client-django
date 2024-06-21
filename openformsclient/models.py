@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.forms.fields import TypedChoiceField
 from django.forms.widgets import Select
-from django.utils.functional import cached_property
+from django.utils.functional import cached_property, lazy
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
@@ -107,8 +107,7 @@ class OpenFormsBaseField:
             "widget": Select,
         }
 
-        if self.choices is None:
-            defaults["choices"] = self.get_choices(include_blank=self.blank)
+        defaults["choices"] = self.get_choices(include_blank=self.blank)
         defaults["coerce"] = self.to_python
 
         return TypedChoiceField(**defaults)
@@ -120,25 +119,27 @@ class OpenFormsBaseField:
         limit_choices_to=None,
         ordering=(),
     ):
-        cache_key = f"openformsclient.models.OpenFormsFieldMixin.get_choices__use_uuids_{self.use_uuids}"
+        def _fetch():
+            cache_key = f"openformsclient.models.OpenFormsBaseField.get_choices__use_uuids_{self.use_uuids}"
 
-        choices = cache.get(cache_key)
-        if choices is None:
-            try:
-                choices = get_form_choices(use_uuids=self.use_uuids)
-            except Exception as e:
-                logger.exception(e)
-                choices = []
-            else:
-                cache.set(cache_key, choices, timeout=60)
+            choices = cache.get(cache_key)
+            if choices is None:
+                try:
+                    choices = get_form_choices(use_uuids=self.use_uuids)
+                except Exception as exc:
+                    logger.exception(exc)
+                    choices = []
+                else:
+                    cache.set(cache_key, choices, timeout=60)
 
-        if choices:
-            if include_blank:
-                blank_defined = any(choice in ("", None) for choice, _ in choices)
-                if not blank_defined:
-                    choices = blank_choice + choices
+            if choices:
+                if include_blank:
+                    blank_defined = any(choice in ("", None) for choice, _ in choices)
+                    if not blank_defined:
+                        choices = blank_choice + choices
+            return choices
 
-        return choices
+        return lazy(_fetch, list)
 
 
 class OpenFormsUUIDField(OpenFormsBaseField, models.UUIDField):
