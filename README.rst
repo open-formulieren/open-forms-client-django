@@ -3,7 +3,7 @@
 Open Forms Client (for Django)
 ==============================
 
-:Version: 0.3.0
+:Version: 0.4.0
 :Source: https://github.com/open-formulieren/open-forms-client-django
 :Keywords: Open Forms, Client, Django
 :PythonVersion: 3.7
@@ -15,7 +15,7 @@ Open Forms Client (for Django)
 About
 =====
 
-Easily integrate `Open Forms`_ in your Django application. There are 3 main 
+Easily integrate `Open Forms`_ in your Django application. There are 3 main
 features:
 
 #. Configuration to connect to Open Forms is added to your Django admin.
@@ -43,7 +43,7 @@ Requirements
 Install
 -------
 
-You can install Open Forms Client either via the Python Package Index (PyPI) or 
+You can install Open Forms Client either via the Python Package Index (PyPI) or
 from source.
 
 To install using ``pip``:
@@ -58,7 +58,7 @@ Usage
 
 To use this with your project you need to follow these steps:
 
-#. Add ``open_forms_client`` to ``INSTALLED_APPS`` in your Django project's 
+#. Add ``open_forms_client`` to ``INSTALLED_APPS`` in your Django project's
    ``settings.py``:
 
    .. code-block:: python
@@ -78,38 +78,38 @@ To use this with your project you need to follow these steps:
           # ...
           form = OpenFormsSlugField(blank=True)
 
-   There is also a ``OpenFormsUUIDField`` that stores the UUID of the form 
-   instead of the "slug". This is more precise but if someone replaces a form 
+   There is also a ``OpenFormsUUIDField`` that stores the UUID of the form
+   instead of the "slug". This is more precise but if someone replaces a form
    in Open Forms, the UUID will change but the slug might remain the same.
 
-#. Add the templatetags ``{% openforms_sdk_media %}`` and 
-   ``{% openforms_form page.form %}`` to your templates, to render an Open 
+#. Add the templatetags ``{% openforms_sdk_media %}`` and
+   ``{% openforms_form page.form %}`` to your templates, to render an Open
    Forms form:
 
    .. code-block:: jinja
- 
+
       {% load openforms %}
       <!-- Optional to render Open Forms in the proper language -->
       <html lang="nl">
       <head>
           <!-- Required for icons used by Open Forms -->
           <meta charset="utf-8">
-  
+
           {% openforms_sdk_media %}
       </head>
       <body>
-  
+
       {% if page.form %}
           {% openforms_form page.form %}
       {% else %}
           <p>This page has no form</p>
       {% endif %}
-  
+
       </body>
       </html>
 
-#. Configure your Open Forms connection and settings in the admin, under 
-   **Open Forms client configuration**. Once the **status** field shows a green 
+#. Configure your Open Forms connection and settings in the admin, under
+   **Open Forms client configuration**. Once the **status** field shows a green
    icon, your configuration is working.
 
 #. Done.
@@ -149,14 +149,14 @@ CSP headers
 When your webapplication uses `CSP headers`_ you need to pass the ``csp_nonce``
 to the ``openforms_form`` templatetag as well. If you use `Django-CSP`_ you can
 do this:
-   
+
 .. code-block:: html
- 
+
    {% load openforms %}
    {% openforms_form page.form csp_nonce=request.csp_nonce %}
 
-Additionally, you need to allow your webapplication to load styles and scripts 
-from the Open Forms SDK and connect to the Open Forms API. When using 
+Additionally, you need to allow your webapplication to load styles and scripts
+from the Open Forms SDK and connect to the Open Forms API. When using
 `Django-CSP`_ some options need to be changed in your ``settings.py``:
 
 .. code-block:: python
@@ -186,15 +186,15 @@ from the Open Forms SDK and connect to the Open Forms API. When using
 Make page refreshes work
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The URL changes when you start a form, indicating the step you are currently 
-on. Refreshing the page will result in a HTTP 404 because this URL does not 
-actually exist. You need to catch these URL-patterns and redirect the user 
+The URL changes when you start a form, indicating the step you are currently
+on. Refreshing the page will result in a HTTP 404 because this URL does not
+actually exist. You need to catch these URL-patterns and redirect the user
 back to the form. You can so like this:
 
 .. code-block:: python
-   
+
    # urls.py
-   
+
    # The view thats starts the form
    path("page/<slug:slug>", PageView.as_view(), name="page"),
    # Whenever you refresh the page that has the form, the URL might be changed
@@ -205,27 +205,27 @@ back to the form. You can so like this:
 Form shows a CSRF error
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-This can have many reasons because by default, you typically don't want 
-cross-site requests. The whole point of this client however, is to allow 
+This can have many reasons because by default, you typically don't want
+cross-site requests. The whole point of this client however, is to allow
 cross-site requests from your website to Open Forms.
 
 Make sure your (not Open Forms) ``SECURE_REFERER_POLICY`` Django setting is set
-to ``origin-when-cross-origin`` or less strict. In Django 3.1 this was made 
+to ``origin-when-cross-origin`` or less strict. In Django 3.1 this was made
 more strict by default.
 
-If this is set correctly and you still get this error, see above settings if 
+If this is set correctly and you still get this error, see above settings if
 your Open Forms installation was correctly configured.
 
 
 Form won't start
 ~~~~~~~~~~~~~~~~
 
-If you can see the form startpage but when you click "start" it doesn't do 
-anything (or you see a CSRF error in your browser log), you are most likely 
+If you can see the form startpage but when you click "start" it doesn't do
+anything (or you see a CSRF error in your browser log), you are most likely
 logged in to Open Forms as admin user. Log out of Open Forms or use incognito
 mode to start the form.
 
-This is a 
+This is a
 `known issue <https://github.com/open-formulieren/open-forms/issues/2104>`_.
 
 

@@ -2,6 +2,14 @@
 Changelog
 =========
 
+0.4.0
+=====
+
+*June 24, 2024*
+
+* Make retrieval of forms lazy to avoid loading forms on
+  application startup
+
 0.3.0
 =====
 
