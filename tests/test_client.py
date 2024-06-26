@@ -11,7 +11,7 @@ from openformsclient.client import Client
 @requests_mock.Mocker()
 class ClientTests(TestCase):
     def setUp(self):
-        self.api_root = "https://example.com/api/v1/"
+        self.api_root = "https://example.com/api/v2/"
         self.api_token = "token"
         self.client_timeout = 2
         self.client = Client(self.api_root, self.api_token, self.client_timeout)
@@ -22,7 +22,7 @@ class ClientTests(TestCase):
 
     def test_is_healthy(self, m):
         m.head(
-            f"{self.api_root}forms",
+            f"{self.api_root}public/forms",
             request_headers={"Authorization": f"Token {self.api_token}"},
         )
 
@@ -31,17 +31,17 @@ class ClientTests(TestCase):
         self.assertEqual(msg, "")
 
     def test_is_healthy_invalid_response(self, m):
-        m.head(f"{self.api_root}forms", status_code=500)  # Doesn't really matter
-        m.get(f"{self.api_root}forms", text="Woops")
+        m.head(f"{self.api_root}public/forms", status_code=500)  # Doesn't really matter
+        m.get(f"{self.api_root}public/forms", text="Woops")
 
         health, msg = self.client.is_healthy()
         self.assertFalse(health)
         self.assertEqual(msg, "Server did not return a valid response (HTTP 500).")
 
     def test_is_healthy_invalid_token(self, m):
-        m.head(f"{self.api_root}forms", status_code=401)
+        m.head(f"{self.api_root}public/forms", status_code=401)
         m.get(
-            f"{self.api_root}forms",
+            f"{self.api_root}public/forms",
             json={
                 "type": "https://example.com/fouten/AuthenticationFailed/",
                 "code": "authentication_failed",
@@ -57,13 +57,13 @@ class ClientTests(TestCase):
         self.assertEqual(msg, "Ongeldige token.")
 
     def test_get_forms(self, m):
-        m.get(f"{self.api_root}forms", json=[])
+        m.get(f"{self.api_root}public/forms", json=[])
 
         result = self.client.get_forms()
         self.assertListEqual(result, [])
 
     def test_get_forms_with_error(self, m):
-        m.get(f"{self.api_root}forms", status_code=401)
+        m.get(f"{self.api_root}public/forms", status_code=401)
 
         with self.assertRaises(HTTPError):
             self.client.get_forms()
@@ -85,7 +85,7 @@ class ClientTests(TestCase):
             self.client.get_form("myform")
             mock_request.assert_called_with(
                 "get",
-                "https://example.com/api/v1/forms/myform",
+                "https://example.com/api/v2/forms/myform",
                 headers={"Authorization": "Token token"},
                 timeout=2,
             )
