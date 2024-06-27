@@ -21,7 +21,7 @@ class IntegrationTests(TestCase):
 
     def _prepare_mock(self, m):
         m.get(
-            f"{self.config.api_root}forms",
+            f"{self.config.api_root}public/forms",
             json=[
                 {
                     "uuid": "1b0d0675-2caf-48e8-beda-c32c6732b63c",

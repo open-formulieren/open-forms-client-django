@@ -35,14 +35,14 @@ class Client:
         try:
             # We do a head request to actually hit a protected endpoint without
             # getting a whole bunch of data.
-            response = self._request("head", "forms")
+            response = self._request("head", "public/forms")
             response.raise_for_status()
             return (True, "")
         except HTTPError as e:
             # If something is wrong, we might get more information from the
             # error message provided by Open Forms.
             try:
-                response = self._request("get", "forms")
+                response = self._request("get", "public/forms")
                 data = response.json()
                 message = (
                     data.get("detail", data.get("title"))
@@ -62,7 +62,7 @@ class Client:
 
         :returns: The API response content as Python object.
         """
-        response = self._request("get", "forms")
+        response = self._request("get", "public/forms")
         response.raise_for_status()
 
         return response.json()
