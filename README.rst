@@ -6,8 +6,8 @@ Open Forms Client (for Django)
 :Version: 0.4.0
 :Source: https://github.com/open-formulieren/open-forms-client-django
 :Keywords: Open Forms, Client, Django
-:PythonVersion: 3.9 - 3.11
-:DjangoVersion: 3.2 - 4.0
+:PythonVersion: 3.11+
+:DjangoVersion: 4.2
 
 |build-status| |code-quality| |black| |coverage|
 
@@ -37,8 +37,8 @@ Installation
 Requirements
 ------------
 
-* Python 3.9 or newer
-* Django 3.2 or newer
+* Python 3.11 or newer
+* Django 4.2
 
 
 Install
