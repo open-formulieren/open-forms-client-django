@@ -1,0 +1,126 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://open-forms.test.maykin.opengem.nl/api/v2/public/forms
+  response:
+    body:
+      string: '{"type":"https://open-forms.test.maykin.opengem.nl/fouten/AuthenticationFailed/","code":"authentication_failed","title":"Ongeldige
+        authenticatiegegevens.","status":401,"detail":"Ongeldige token.","instance":"urn:uuid:b3f40157-9442-486c-aaba-037f9342c703"}'
+    headers:
+      Allow:
+      - GET, HEAD, OPTIONS
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate, private
+      Connection:
+      - keep-alive
+      Content-Language:
+      - nl
+      Content-Length:
+      - '255'
+      Content-Type:
+      - application/json
+      Cross-Origin-Opener-Policy:
+      - same-origin
+      Date:
+      - Wed, 31 Jul 2024 08:05:44 GMT
+      Expires:
+      - Wed, 31 Jul 2024 08:05:44 GMT
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - same-origin
+      Set-Cookie:
+      - csrftoken=rDnuLzLrAUGpIgp2gYxelwj7UGZEqCV6; expires=Wed, 30 Jul 2025 08:05:44
+        GMT; Max-Age=31449600; Path=/; SameSite=None; Secure
+      - openforms_sessionid=8ev8ldwpo3vi2qsnw0l176htbcrcbg54; expires=Wed, 31 Jul
+        2024 08:10:44 GMT; HttpOnly; Max-Age=300; Path=/; SameSite=None; Secure
+      Strict-Transport-Security:
+      - max-age=63072000
+      Vary:
+      - Cookie, Origin, Accept-Language
+      WWW-Authenticate:
+      - Token
+      X-CSRFToken:
+      - 5dZg56rok3RheSgkWWqoIhnpkBNVnweDmGcAGv2FKNnwMYvc2KNsTDwm47CpDYZz
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Session-Expires-In:
+      - '300'
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://open-forms.test.maykin.opengem.nl/api/v2/forms/9c65ab49-2635-4c8d-ac22-aaca67044a6c
+  response:
+    body:
+      string: '{"type":"https://open-forms.test.maykin.opengem.nl/fouten/AuthenticationFailed/","code":"authentication_failed","title":"Ongeldige
+        authenticatiegegevens.","status":401,"detail":"Ongeldige token.","instance":"urn:uuid:d545fdc9-8186-456a-999b-c0c388fe922a"}'
+    headers:
+      Allow:
+      - GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate, private
+      Connection:
+      - keep-alive
+      Content-Language:
+      - nl
+      Content-Length:
+      - '255'
+      Content-Type:
+      - application/json
+      Cross-Origin-Opener-Policy:
+      - same-origin
+      Date:
+      - Wed, 31 Jul 2024 08:05:45 GMT
+      Expires:
+      - Wed, 31 Jul 2024 08:05:45 GMT
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - same-origin
+      Set-Cookie:
+      - csrftoken=erCNNjLn8PKuLjVPK1ZDw3a4Rv7PUQS9; expires=Wed, 30 Jul 2025 08:05:45
+        GMT; Max-Age=31449600; Path=/; SameSite=None; Secure
+      - openforms_sessionid=qm2mjv9kxo2xcckzvb0flhy5nt5d3zbz; expires=Wed, 31 Jul
+        2024 08:10:45 GMT; HttpOnly; Max-Age=300; Path=/; SameSite=None; Secure
+      Strict-Transport-Security:
+      - max-age=63072000
+      Vary:
+      - Cookie, Origin, Accept-Language
+      WWW-Authenticate:
+      - Token
+      X-CSRFToken:
+      - SDRW8cYDR5y2Ti1Ihv4D8Uns3RlWJ44eWUjzLlzQPK8murMnRmT6uNnmKciBtKMd
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Session-Expires-In:
+      - '300'
+    status:
+      code: 401
+      message: Unauthorized
+version: 1
